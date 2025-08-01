@@ -1,13 +1,13 @@
 describe("Bot war api", () => {
     test("GET /", async () => {
-        const response = await fetch("http://localhost:3000/");
+        const response = await fetch(`${process.env.API_URL}/`);
         expect(response.status).toBe(200);
         const text = await response.text();
         expect(text).toBe("Bot war API");
     });
 
     test("GET /action", async () => {
-        const response = await fetch("http://localhost:3000/action");
+        const response = await fetch(`${process.env.API_URL}/action`);
         expect(response.status).toBe(200);
         const data = await response.json();
         expect(data).toHaveProperty("move");
@@ -19,7 +19,7 @@ describe("Bot war api", () => {
             move: "UP",
             action: "COLLECT"
         };
-        const response = await fetch("http://localhost:3000/set-action", {
+        const response = await fetch(`${process.env.API_URL}/set-action`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -36,7 +36,7 @@ describe("Bot war api", () => {
             move: "INVALID",
             action: "COLLECT"
         };
-        const response = await fetch("http://localhost:3000/set-action", {
+        const response = await fetch(`${process.env.API_URL}/set-action`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -52,7 +52,7 @@ describe("Bot war api", () => {
         const payload = {
             action: "COLLECT"
         };
-        const response = await fetch("http://localhost:3000/set-action", {
+        const response = await fetch(`${process.env.API_URL}/set-action`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -69,7 +69,7 @@ describe("Bot war api", () => {
             move: "UP",
             action: "BOMB"
         };
-        const response = await fetch("http://localhost:3000/set-action", {
+        const response = await fetch(`${process.env.API_URL}/set-action`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
