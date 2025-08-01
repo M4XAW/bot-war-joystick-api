@@ -11,16 +11,38 @@ app.get("/", (req, res) => {
     res.send("Bot war API");
 });
 
+const allowedMoves = ["UP", "DOWN", "LEFT", "RIGHT", "STAY"];
+const allowedActions = ["COLLECT", "ATTACK", "BOMB", "NONE"];
+const allowedBombTypes = ["proximity", "timer", "static"];
+
 let lastAction = { move: "STAY", action: "NONE" };
 
 app.post("/set-action", (req, res) => {
-    const { move, action } = req.body;
-    
-    if (!move || !action) {
-        return res.status(400).send("Move and action are required");
+    const { move, action, bombType } = req.body;
+
+    if (!move || !allowedMoves.includes(move)) {
+        return res.status(400).send("Invalid or missing move");
     }
+
+    if (!action || !allowedActions.includes(action)) {
+        return res.status(400).send("Invalid or missing action");
+    }
+
+    if (action === "BOMB") {
+        if (!bombType || !allowedBombTypes.includes(bombType)) {
+            return res.status(400).send("Invalid or missing bomb type");
+        }
+
+        lastAction = { move, action, bombType };
+        return res.json(lastAction);
+    }
+
+    if (bombType) {
+        return res.status(400).send("Bomb type should only be specified for BOMB action");
+    }
+
     lastAction = { move, action };
-    res.send({ move: move, action: action });
+    return res.json(lastAction);
 });
 
 
