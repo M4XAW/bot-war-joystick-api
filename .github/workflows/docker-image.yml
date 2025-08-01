@@ -20,8 +20,3 @@ jobs:
 
     - name: Run tests
       run: docker run --rm -e API_URL=${{ secrets.API_URL }} bot-war npm test
-
-    - name: Deploy
-      run: |
-        docker tag bot-war m4x4w/bot-war:latest
-        docker push m4x4w/bot-war:latest
