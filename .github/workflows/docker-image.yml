@@ -14,5 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Run tests
+      run: docker run my-image-name:$(date +%s) npm test
+
+    - name: Push the Docker image
+      run: |
+        docker tag my-image-name:$(date +%s) m4x4w/my-image-name:latest
+        docker push m4x4w/my-image-name:latest

@@ -2,9 +2,10 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY index.js .
-RUN npm install express dotenv cors
+COPY package*.json /app
+RUN npm install
 
+COPY . /app
 EXPOSE 3000
 
 CMD ["node", "index.js"]
