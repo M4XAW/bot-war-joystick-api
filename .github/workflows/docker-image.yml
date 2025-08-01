@@ -19,7 +19,7 @@ jobs:
       run: docker build -t bot-war .
 
     - name: Run tests
-      run: docker run --rm -e API_URL=${{ vars.API_URL }} bot-war npm test
+      run: docker run --rm -e API_URL=${{ secrets.API_URL }} bot-war npm test
 
     - name: Deploy
       run: |
